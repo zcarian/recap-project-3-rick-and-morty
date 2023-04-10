@@ -10,7 +10,7 @@ export function createPrevButton() {
     if (pageData.page > 1) {
       cardContainer.innerHTML = "";
       pageData.page--;
-      fetchData(pageData.page);
+      fetchData();
     }
   };
 
@@ -27,7 +27,7 @@ export function createNextButton() {
     if (pageData.page < pageData.maxPage) {
       cardContainer.innerHTML = "";
       pageData.page++;
-      fetchData(pageData.page);
+      fetchData();
     }
   };
 

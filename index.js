@@ -8,21 +8,24 @@ import {
   createSearchBar,
   searchQuery,
 } from "./components/search-bar/search-bar.js";
+
 export const cardContainer = document.querySelector(
   '[data-js="card-container"]'
 );
 const searchBarContainer = document.querySelector(
   '[data-js="search-bar-container"]'
 );
-searchBarContainer.append(createSearchBar());
 const navigation = document.querySelector('[data-js="navigation"]');
 
 export const pageData = {
   page: 1,
-  maxPage: 42,
+  maxPage: null,
 };
 
-export const pagination = createPagination();
+searchBarContainer.append(createSearchBar());
+
+const pagination = createPagination();
+
 navigation.append(createPrevButton());
 navigation.append(pagination);
 navigation.append(createNextButton());
@@ -35,9 +38,9 @@ export async function fetchData() {
     );
     if (!response.ok) {
       console.log("Bad request!");
+      pagination.textContent = "0/0";
     } else {
       const rickAndMortyData = await response.json();
-      console.log(rickAndMortyData);
       pageData.maxPage = rickAndMortyData.info.pages;
       pagination.textContent = `${pageData.page} / ${pageData.maxPage}`;
       rickAndMortyData.results.forEach((rickAndMortyCharacter) => {
@@ -46,7 +49,6 @@ export async function fetchData() {
     }
   } catch (e) {
     console.error(e);
-    pagination.textContent = "0/0";
   }
 }
 
