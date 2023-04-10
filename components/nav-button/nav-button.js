@@ -1,5 +1,4 @@
-import { fetchData, cardContainer, maxPage, pagination } from "../../index.js";
-export let page = 1;
+import { fetchData, cardContainer, pageData } from "../../index.js";
 export function createPrevButton() {
   const previousButton = document.createElement("button");
   previousButton.classList.add("button");
@@ -8,12 +7,10 @@ export function createPrevButton() {
   previousButton.textContent = "previous";
 
   previousButton.onclick = function () {
-    if (page > 1) {
+    if (pageData.page > 1) {
       cardContainer.innerHTML = "";
-      page--;
-      fetchData(page);
-      pagination.textContent = `${page} / ${maxPage}`;
-      console.log("page: ", page, "maxPage: ", maxPage);
+      pageData.page--;
+      fetchData(pageData.page);
     }
   };
 
@@ -27,13 +24,10 @@ export function createNextButton() {
   nextButton.textContent = "next";
 
   nextButton.onclick = function () {
-    if (page < maxPage) {
+    if (pageData.page < pageData.maxPage) {
       cardContainer.innerHTML = "";
-      page++;
-      fetchData(page);
-      pagination.textContent = `${page} / ${maxPage}`;
-
-      console.log("page: ", page, "maxPage: ", maxPage);
+      pageData.page++;
+      fetchData(pageData.page);
     }
   };
 

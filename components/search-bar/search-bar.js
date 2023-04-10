@@ -1,3 +1,7 @@
+import { fetchData, cardContainer, pageData } from "../../index.js";
+
+export let searchQuery = "";
+
 export function createSearchBar() {
   const form = document.createElement("form");
   form.classList.add("search-bar");
@@ -22,5 +26,14 @@ export function createSearchBar() {
   img.setAttribute("alt", "");
   button.append(img);
   form.append(button);
+
+  form.onsubmit = function (event) {
+    event.preventDefault();
+    cardContainer.innerHTML = "";
+    searchQuery = input.value;
+    pageData.page = 1;
+    fetchData();
+  };
+
   return form;
 }
