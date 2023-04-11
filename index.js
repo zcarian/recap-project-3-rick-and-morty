@@ -19,10 +19,9 @@ const navigation = document.querySelector('[data-js="navigation"]');
 
 export const pageData = {
   page: 1,
-  maxPage: 42,
+  maxPage: null,
 };
-
-export const pagination = createPagination();
+const pagination = createPagination();
 navigation.append(createPrevButton());
 navigation.append(pagination);
 navigation.append(createNextButton());
@@ -35,9 +34,9 @@ export async function fetchData() {
     );
     if (!response.ok) {
       console.log("Bad request!");
+      pagination.textContent = "0/0";
     } else {
       const rickAndMortyData = await response.json();
-      console.log(rickAndMortyData);
       pageData.maxPage = rickAndMortyData.info.pages;
       pagination.textContent = `${pageData.page} / ${pageData.maxPage}`;
       rickAndMortyData.results.forEach((rickAndMortyCharacter) => {
@@ -46,7 +45,6 @@ export async function fetchData() {
     }
   } catch (e) {
     console.error(e);
-    pagination.textContent = "0/0";
   }
 }
 
